@@ -29,10 +29,10 @@ class PermissionHandlerService {
   }
 
   Future<void> showPermissionDialog(BuildContext context) async {
-    showDialog(
+    showAdaptiveDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return AlertDialog.adaptive(
           title: const Text('Location Permission Denied'),
           content: const Text(
               'Location permission has been permanently denied. Please enable it in the app settings to continue tracking location.'),

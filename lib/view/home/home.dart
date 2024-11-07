@@ -20,6 +20,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    bool isTablet = size.width >= 550;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -35,75 +37,12 @@ class _HomeViewState extends State<HomeView> {
           builder: (context, viewModel, child) {
             return Column(
               children: [
-                Container(
-                  color: Colors.grey[900],
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-                  child: Column(
-                    children: [
-                      ButtonWidget(
-                        color: Colors.blue,
-                        onPressed: () async {
-                          var permissionstatus = await viewModel
-                              .permissionHandlerService
-                              .requestLocationPermission();
-                          if (context.mounted) {
-                            if (permissionstatus) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text("Location Permission Enabled")));
-                            }
-                          }
-                        },
-                        title: 'Request Location Permission',
-                      ),
-                      ButtonWidget(
-                        color: Colors.amber,
-                        onPressed: () async {
-                          var permissionstatus = await viewModel
-                              .permissionHandlerService
-                              .requestNotificationPermission();
-                          if (permissionstatus) {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          "Notification Permission Enabled")));
-                            }
-                          }
-                        },
-                        title: 'Request Notification Permission',
-                      ),
-                      ButtonWidget(
-                        color: Colors.green,
-                        onPressed: () => viewModel.startTracking(context),
-                        title: 'Start Location Update',
-                      ),
-                      ButtonWidget(
-                        color: Colors.red,
-                        onPressed: () => viewModel.stopTracking(),
-                        title: 'Stop Location Update',
-                      ),
-                    ],
-                  ),
-                ),
+                const ButtonsSection(),
                 Expanded(
                   child: viewModel.currentPositions.isNotEmpty
-                      ? ListView.separated(
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(height: 10);
-                          },
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 20),
-                          itemCount: viewModel.currentPositions.length,
-                          itemBuilder: (context, index) {
-                            final position = viewModel.currentPositions[index];
-                            return LocationTileWidget(
-                              index: index + 1,
-                              position: position,
-                            );
-                          },
+                      ? LocationDataBuilder(
+                          positionList: viewModel.currentPositions,
+                          isTablet: isTablet,
                         )
                       : Center(
                           child: Text('Start Tracking',

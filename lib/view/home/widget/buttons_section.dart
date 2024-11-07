@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:negup_test/core/providers/home_viewmodel.dart';
 import 'package:negup_test/view/home/widget/button_widget.dart';
 import 'package:negup_test/view/home/widget/location_dialog.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class ButtonsSection extends StatelessWidget {
@@ -41,6 +42,16 @@ class ButtonsSection extends StatelessWidget {
                               const SnackBar(
                                   content:
                                       Text("Location Permission Enabled")));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: const Text(
+                                "Location Permission Denied Go to settings and enable location"),
+                            action: SnackBarAction(
+                                label: 'Settings',
+                                onPressed: () {
+                                  openAppSettings();
+                                }),
+                          ));
                         }
                       }
                     },
@@ -63,6 +74,18 @@ class ButtonsSection extends StatelessWidget {
                               const SnackBar(
                                   content:
                                       Text("Notification Permission Enabled")));
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: const Text(
+                                "Notification Permission Denied  Go to settings and enable notification"),
+                            action: SnackBarAction(
+                                label: 'Settings',
+                                onPressed: () {
+                                  openAppSettings();
+                                }),
+                          ));
                         }
                       }
                     },
