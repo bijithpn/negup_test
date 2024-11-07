@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:negup_test/core/constants/constants.dart';
 
 class ButtonWidget extends StatelessWidget {
   final Color color;
@@ -29,7 +30,7 @@ class ButtonWidget extends StatelessWidget {
         child: Text(title,
             style: titleStyle ??
                 Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Colors.white,
+                      color: AppColor.white,
                       fontWeight: FontWeight.bold,
                     )),
       ),

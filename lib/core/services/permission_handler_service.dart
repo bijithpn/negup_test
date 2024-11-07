@@ -1,3 +1,4 @@
+import 'package:negup_test/core/constants/app_strings.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 
@@ -33,22 +34,38 @@ class PermissionHandlerService {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog.adaptive(
-          title: const Text('Location Permission Denied'),
-          content: const Text(
-              'Location permission has been permanently denied. Please enable it in the app settings to continue tracking location.'),
+          title: Text(
+            AppStrings.locationPermissionDenied,
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            AppStrings.locationPermissionPermanentlyDenied,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
                 openAppSettings();
               },
-              child: const Text('Go to Settings'),
+              child: Text(AppStrings.goToSetting,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Cancel'),
+              child: Text(AppStrings.cancel,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold)),
             ),
           ],
         );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:negup_test/core/constants/app_color.dart';
+import 'package:negup_test/core/constants/app_strings.dart';
 import 'package:negup_test/core/providers/home_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -18,9 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Negup Test',
+      title: AppStrings.appName,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
         useMaterial3: true,
       ),
       home: const HomeView(),

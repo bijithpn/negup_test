@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:negup_test/core/constants/constants.dart';
 import 'package:negup_test/core/providers/home_viewmodel.dart';
 import 'package:negup_test/view/home/widget/button_widget.dart';
 import 'package:negup_test/view/home/widget/location_dialog.dart';
@@ -18,7 +19,7 @@ class ButtonsSection extends StatelessWidget {
         return OrientationBuilder(
           builder: (context, orientation) {
             return Container(
-              color: Colors.grey[900],
+              color: AppColor.darkGrey,
               child: GridView.count(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -33,7 +34,7 @@ class ButtonsSection extends StatelessWidget {
                         : 2,
                 children: [
                   ButtonWidget(
-                    color: Colors.blue,
+                    color: AppColor.blue,
                     onPressed: () async {
                       var permissionstatus = await viewModel
                           .permissionHandlerService
@@ -41,14 +42,14 @@ class ButtonsSection extends StatelessWidget {
                       if (context.mounted) {
                         if (permissionstatus) {
                           snackBarService.showToast(
-                            "Location Permission Enabled",
+                            AppStrings.locationEnabled,
                           );
                         } else {
                           snackBarService.showSnackBar(
-                            "Location Permission Denied Go to settings and enable location",
+                            AppStrings.locationEnabledMessage,
                             context: context,
                             snackBarAction: SnackBarAction(
-                                label: 'Settings',
+                                label: AppStrings.settings,
                                 onPressed: () {
                                   openAppSettings();
                                 }),
@@ -56,10 +57,10 @@ class ButtonsSection extends StatelessWidget {
                         }
                       }
                     },
-                    title: 'Request Location Permission',
+                    title: AppStrings.requestLocationPermission,
                   ),
                   ButtonWidget(
-                    color: Colors.amber,
+                    color: AppColor.yellow,
                     titleStyle:
                         Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Colors.black,
@@ -71,16 +72,16 @@ class ButtonsSection extends StatelessWidget {
                           .requestNotificationPermission();
                       if (permissionstatus) {
                         if (context.mounted) {
-                          snackBarService
-                              .showToast("Notification Permission Enabled");
+                          snackBarService.showToast(
+                              AppStrings.notificationPermissionEnabled);
                         }
                       } else {
                         if (context.mounted) {
                           snackBarService.showSnackBar(
-                            "Notification Permission Denied  Go to settings and enable notification",
+                            AppStrings.notificationPermissionDenied,
                             context: context,
                             snackBarAction: SnackBarAction(
-                                label: 'Settings',
+                                label: AppStrings.settings,
                                 onPressed: () {
                                   openAppSettings();
                                 }),
@@ -88,21 +89,21 @@ class ButtonsSection extends StatelessWidget {
                         }
                       }
                     },
-                    title: 'Request Notification Permission',
+                    title: AppStrings.requestNotificationPermission,
                   ),
                   ButtonWidget(
-                    color: Colors.green,
+                    color: AppColor.green,
                     onPressed: () => showAdaptiveDialog(
                         context: context,
                         builder: (_) {
                           return const LocationDialog();
                         }),
-                    title: 'Start Location Update',
+                    title: AppStrings.startLocationUpdate,
                   ),
                   ButtonWidget(
-                    color: Colors.red,
+                    color: AppColor.red,
                     onPressed: () => viewModel.stopTracking(),
-                    title: 'Stop Location Update',
+                    title: AppStrings.stopLocationUpdate,
                   ),
                 ],
               ),

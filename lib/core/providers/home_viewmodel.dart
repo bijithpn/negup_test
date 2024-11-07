@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:negup_test/core/constants/app_strings.dart';
 import 'package:negup_test/core/constants/storage_keys.dart';
 import 'package:negup_test/core/utils/utils.dart';
 
@@ -60,8 +61,8 @@ class HomeViewModel extends ChangeNotifier {
       }
       _isTracking = true;
       notificationService.showNotification(
-        title: "Location updated",
-        message: "Your location has been updated.",
+        title: AppStrings.locationUpdatedTitle,
+        message: AppStrings.locationUpdatedMessage,
       );
       startLocationUpdates();
       notifyListeners();
@@ -89,7 +90,7 @@ class HomeViewModel extends ChangeNotifier {
       savePositions(_currentPositions);
       notifyListeners();
     } catch (e) {
-      debugPrint("Error fetching location: $e");
+      SnackbarService().showToast("Error fetching location");
     }
   }
 
@@ -104,8 +105,8 @@ class HomeViewModel extends ChangeNotifier {
     _locationTimer?.cancel();
     _isTracking = false;
     notificationService.showNotification(
-      title: "Location update stopped",
-      message: "Location tracking has been paused. You can resume it later.",
+      title: AppStrings.locationUpdateStoppedTitle,
+      message: AppStrings.locationUpdateStoppedMessage,
     );
     notifyListeners();
   }

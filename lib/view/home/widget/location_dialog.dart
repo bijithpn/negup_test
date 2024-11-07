@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:negup_test/core/constants/app_strings.dart';
 import 'package:negup_test/core/providers/home_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -9,14 +10,14 @@ class LocationDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog.adaptive(
       title: Text(
-        "Location Access",
+        AppStrings.locationAccess,
         style: Theme.of(context)
             .textTheme
             .titleLarge!
             .copyWith(fontWeight: FontWeight.bold),
       ),
       content: Text(
-        "This app needs access to your location to provide accurate information. Please allow location access.",
+        AppStrings.locationDeniedDialog,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       actionsAlignment: MainAxisAlignment.spaceEvenly,
@@ -24,7 +25,7 @@ class LocationDialog extends StatelessWidget {
         TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              "No",
+              AppStrings.no,
               style: Theme.of(context).textTheme.bodyLarge,
             )),
         TextButton(
@@ -34,7 +35,7 @@ class LocationDialog extends StatelessWidget {
                   .startTracking(context);
             },
             child: Text(
-              "Yes",
+              AppStrings.yes,
               style: Theme.of(context).textTheme.bodyLarge,
             ))
       ],

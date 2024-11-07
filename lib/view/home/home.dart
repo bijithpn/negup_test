@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:negup_test/core/providers/home_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/constants/constants.dart';
 import 'widget/widget.dart';
 
 class HomeView extends StatefulWidget {
@@ -26,12 +27,12 @@ class _HomeViewState extends State<HomeView> {
       home: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text('Test App',
+          title: Text(AppStrings.appbarTitle,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge!
-                  .copyWith(color: Colors.white)),
-          backgroundColor: Colors.grey[900],
+                  .copyWith(color: AppColor.white)),
+          backgroundColor: AppColor.darkGrey,
         ),
         body: Consumer<HomeViewModel>(
           builder: (context, viewModel, child) {
@@ -45,11 +46,11 @@ class _HomeViewState extends State<HomeView> {
                           isTablet: isTablet,
                         )
                       : Center(
-                          child: Text('Start Tracking',
+                          child: Text(AppStrings.startTracking,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge!
-                                  .copyWith(color: Colors.black)),
+                                  .copyWith(color: AppColor.black)),
                         ),
                 )
               ],

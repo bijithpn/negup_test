@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../../core/constants/constants.dart';
+
 class LocationTileWidget extends StatelessWidget {
   const LocationTileWidget({
     super.key,
@@ -18,7 +20,7 @@ class LocationTileWidget extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 15,
         ),
-        tileColor: Colors.grey[200],
+        tileColor: AppColor.lightGrey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

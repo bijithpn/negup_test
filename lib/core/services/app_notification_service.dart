@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:negup_test/core/constants/constants.dart';
 
 class SnackbarService {
   static final SnackbarService _instance = SnackbarService._internal();
@@ -23,7 +24,7 @@ class SnackbarService {
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!
-                .copyWith(color: Colors.white)),
+                .copyWith(color: AppColor.white)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         duration: duration,

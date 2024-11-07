@@ -24,7 +24,7 @@ class NotificationService {
   Future<void> showNotification(
       {required String title, required String message}) async {
     const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails('channel_id', 'channel_name');
+        AndroidNotificationDetails('test_id', 'test_name');
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidDetails);
     //Use same ID(0) for each notification to avoid cluttering the notification bar.
