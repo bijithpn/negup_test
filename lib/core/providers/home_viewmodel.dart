@@ -59,6 +59,10 @@ class HomeViewModel extends ChangeNotifier {
         await getLocation();
       }
       _isTracking = true;
+      notificationService.showNotification(
+        title: "Location updated",
+        message: "Your location has been updated.",
+      );
       startLocationUpdates();
       notifyListeners();
     } else {
@@ -82,10 +86,6 @@ class HomeViewModel extends ChangeNotifier {
       }
       Position position = await _locationService.getCurrentLocation();
       _currentPositions.add(position);
-      notificationService.showNotification(
-        title: "Location updated",
-        message: "Your location has been updated.",
-      );
       savePositions(_currentPositions);
       notifyListeners();
     } catch (e) {
@@ -103,6 +103,10 @@ class HomeViewModel extends ChangeNotifier {
   void stopTracking() {
     _locationTimer?.cancel();
     _isTracking = false;
+    notificationService.showNotification(
+      title: "Location update stopped",
+      message: "Location tracking has been paused. You can resume it later.",
+    );
     notifyListeners();
   }
 }

@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatelessWidget {
   final Color color;
   final VoidCallback? onPressed;
+  final Size? minimumSize;
   final String title;
+  final TextStyle? titleStyle;
   const ButtonWidget({
     super.key,
     required this.color,
     this.onPressed,
     required this.title,
+    this.titleStyle,
+    this.minimumSize = const Size(double.infinity, 60),
   });
 
   @override
@@ -17,15 +21,17 @@ class ButtonWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 7.5),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          minimumSize: const Size(double.infinity, 50),
-          backgroundColor: color,
-        ),
+            minimumSize: minimumSize,
+            backgroundColor: color,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10))),
         onPressed: onPressed,
         child: Text(title,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                )),
+            style: titleStyle ??
+                Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    )),
       ),
     );
   }

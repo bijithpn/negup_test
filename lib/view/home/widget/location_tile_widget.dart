@@ -15,6 +15,8 @@ class LocationTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var subtitleStyle = Theme.of(context).textTheme.bodyMedium;
     return ListTile(
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         tileColor: Colors.grey[200],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
