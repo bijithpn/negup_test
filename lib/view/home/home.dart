@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
           builder: (context, viewModel, child) {
             return Column(
               children: [
-                const ButtonsSection(),
+                ButtonsSection(),
                 Expanded(
                   child: viewModel.currentPositions.isNotEmpty
                       ? LocationDataBuilder(

@@ -5,9 +5,11 @@ import 'package:negup_test/view/home/widget/location_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-class ButtonsSection extends StatelessWidget {
-  const ButtonsSection({super.key});
+import '../../../core/services/app_notification_service.dart';
 
+class ButtonsSection extends StatelessWidget {
+  ButtonsSection({super.key});
+  final snackBarService = SnackbarService();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -38,20 +40,19 @@ class ButtonsSection extends StatelessWidget {
                           .requestLocationPermission();
                       if (context.mounted) {
                         if (permissionstatus) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text("Location Permission Enabled")));
+                          snackBarService.showToast(
+                            "Location Permission Enabled",
+                          );
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text(
-                                "Location Permission Denied Go to settings and enable location"),
-                            action: SnackBarAction(
+                          snackBarService.showSnackBar(
+                            "Location Permission Denied Go to settings and enable location",
+                            context: context,
+                            snackBarAction: SnackBarAction(
                                 label: 'Settings',
                                 onPressed: () {
                                   openAppSettings();
                                 }),
-                          ));
+                          );
                         }
                       }
                     },
@@ -70,22 +71,20 @@ class ButtonsSection extends StatelessWidget {
                           .requestNotificationPermission();
                       if (permissionstatus) {
                         if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text("Notification Permission Enabled")));
+                          snackBarService
+                              .showToast("Notification Permission Enabled");
                         }
                       } else {
                         if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text(
-                                "Notification Permission Denied  Go to settings and enable notification"),
-                            action: SnackBarAction(
+                          snackBarService.showSnackBar(
+                            "Notification Permission Denied  Go to settings and enable notification",
+                            context: context,
+                            snackBarAction: SnackBarAction(
                                 label: 'Settings',
                                 onPressed: () {
                                   openAppSettings();
                                 }),
-                          ));
+                          );
                         }
                       }
                     },
