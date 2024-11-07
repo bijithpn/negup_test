@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:negup_test/core/providers/home_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import 'widget/widget.dart';
+
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
@@ -9,8 +11,8 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey[900],
         appBar: AppBar(
+          elevation: 0,
           title: Text('Test App',
               style: Theme.of(context)
                   .textTheme
@@ -20,121 +22,87 @@ class HomeView extends StatelessWidget {
         ),
         body: Consumer<HomeViewModel>(
           builder: (context, viewModel, child) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.blue,
-                    ),
-                    onPressed: () async {
-                      var permissionstatus = await viewModel
-                          .permissionHandlerService
-                          .requestLocationPermission();
-                      if (context.mounted) {
-                        if (permissionstatus) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text("Location Permission Enabled")));
-                        }
-                      }
-                    },
-                    child: Text('Request Location Permission',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
+            return Column(
+              children: [
+                Container(
+                  color: Colors.grey[900],
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+                  child: Column(
+                    children: [
+                      ButtonWidget(
+                        color: Colors.blue,
+                        onPressed: () async {
+                          var permissionstatus = await viewModel
+                              .permissionHandlerService
+                              .requestLocationPermission();
+                          if (context.mounted) {
+                            if (permissionstatus) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text("Location Permission Enabled")));
+                            }
+                          }
+                        },
+                        title: 'Request Location Permission',
+                      ),
+                      ButtonWidget(
+                        color: Colors.amber,
+                        onPressed: () async {
+                          var permissionstatus = await viewModel
+                              .permissionHandlerService
+                              .requestNotificationPermission();
+                          if (permissionstatus) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          "Notification Permission Enabled")));
+                            }
+                          }
+                        },
+                        title: 'Request Notification Permission',
+                      ),
+                      ButtonWidget(
+                        color: Colors.green,
+                        onPressed: () => viewModel.startTracking(context),
+                        title: 'Start Location Update',
+                      ),
+                      ButtonWidget(
+                        color: Colors.red,
+                        onPressed: () => viewModel.stopTracking(),
+                        title: 'Stop Location Update',
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.amber,
-                    ),
-                    onPressed: () async {
-                      var permissionstatus = await viewModel
-                          .permissionHandlerService
-                          .requestNotificationPermission();
-                      if (permissionstatus) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text("Notification Permission Enabled")));
-                        }
-                      }
-                    },
-                    child: Text('Request Notification Permission',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.green,
-                    ),
-                    onPressed: () => viewModel.startTracking(context),
-                    child: Text('Start Location Update',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.red,
-                    ),
-                    onPressed: () => viewModel.stopTracking(),
-                    child: Text('Stop Location Update',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                    child: viewModel.currentPositions.isNotEmpty
-                        ? ListView.builder(
-                            itemCount: viewModel.currentPositions.length,
-                            itemBuilder: (context, index) {
-                              final position =
-                                  viewModel.currentPositions[index];
-                              return ListTile(
-                                title: Text(
-                                    "Lat: ${position.latitude}, Long: ${position.longitude} speed: ${position.speed.round()}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(color: Colors.white)),
-                              );
-                            },
-                          )
-                        : Center(
-                            child: Text('Start Tracking',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .copyWith(color: Colors.white)),
-                          ),
-                  )
-                ],
-              ),
+                ),
+                Expanded(
+                  child: viewModel.currentPositions.isNotEmpty
+                      ? ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(height: 10);
+                          },
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 20),
+                          itemCount: viewModel.currentPositions.length,
+                          itemBuilder: (context, index) {
+                            final position = viewModel.currentPositions[index];
+                            return LocationTileWidget(
+                              index: index + 1,
+                              position: position,
+                            );
+                          },
+                        )
+                      : Center(
+                          child: Text('Start Tracking',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(color: Colors.black)),
+                        ),
+                )
+              ],
             );
           },
         ),

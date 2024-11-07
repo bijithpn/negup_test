@@ -2,6 +2,15 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 
 class PermissionHandlerService {
+  static final PermissionHandlerService _singleton =
+      PermissionHandlerService._internal();
+
+  factory PermissionHandlerService() {
+    return _singleton;
+  }
+
+  PermissionHandlerService._internal();
+
   Future<bool> requestLocationPermission() async {
     var status = await Permission.location.request();
     if (status.isGranted) {

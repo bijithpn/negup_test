@@ -1,12 +1,17 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
-  final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  static final NotificationService _singleton = NotificationService._internal();
 
-  NotificationService() {
+  factory NotificationService() {
+    return _singleton;
+  }
+
+  NotificationService._internal() {
     _initializeNotifications();
   }
+  final FlutterLocalNotificationsPlugin _notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   void _initializeNotifications() {
     const AndroidInitializationSettings initializationSettingsAndroid =
