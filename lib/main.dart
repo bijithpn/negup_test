@@ -16,9 +16,13 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
   @override
   Widget build(BuildContext context) {
+    SnackbarService.initialize(scaffoldMessengerKey);
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
       title: AppStrings.appName,
       theme: ThemeData(

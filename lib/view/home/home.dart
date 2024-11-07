@@ -23,40 +23,29 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     bool isTablet = size.width >= 550;
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: Text(AppStrings.appbarTitle,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: AppColor.white)),
-          backgroundColor: AppColor.darkGrey,
-        ),
-        body: Consumer<HomeViewModel>(
-          builder: (context, viewModel, child) {
-            return Column(
-              children: [
-                ButtonsSection(),
-                Expanded(
-                  child: viewModel.currentPositions.isNotEmpty
-                      ? LocationDataBuilder(
-                          positionList: viewModel.currentPositions,
-                          isTablet: isTablet,
-                        )
-                      : Center(
-                          child: Text(AppStrings.startTracking,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(color: AppColor.black)),
-                        ),
-                )
-              ],
-            );
-          },
-        ),
+    return Scaffold(
+      body: Consumer<HomeViewModel>(
+        builder: (context, viewModel, child) {
+          return Column(
+            children: [
+              ButtonsSection(),
+              Expanded(
+                child: viewModel.currentPositions.isNotEmpty
+                    ? LocationDataBuilder(
+                        positionList: viewModel.currentPositions,
+                        isTablet: isTablet,
+                      )
+                    : Center(
+                        child: Text(AppStrings.startTracking,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(color: AppColor.black)),
+                      ),
+              )
+            ],
+          );
+        },
       ),
     );
   }

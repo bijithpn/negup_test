@@ -10,18 +10,23 @@ class SnackbarService {
   factory SnackbarService() {
     return _instance;
   }
+  static late GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey;
+
+  static void initialize(
+      GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey) {
+    _scaffoldMessengerKey = scaffoldMessengerKey;
+  }
 
   void showSnackBar(
     String message, {
-    required BuildContext context,
     Duration duration = const Duration(seconds: 2),
     SnackBarAction? snackBarAction,
     SnackBarBehavior behavior = SnackBarBehavior.floating,
   }) {
-    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+    _scaffoldMessengerKey.currentState?.showSnackBar(
       SnackBar(
         content: Text(message,
-            style: Theme.of(context)
+            style: Theme.of(_scaffoldMessengerKey.currentState!.context)
                 .textTheme
                 .bodyMedium!
                 .copyWith(color: AppColor.white)),
