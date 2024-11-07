@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationTileWidget extends StatelessWidget {
-  final int index;
-  final Position position;
   const LocationTileWidget({
     super.key,
     required this.index,
     required this.position,
   });
+
+  final int index;
+  final Position position;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class LocationTileWidget extends StatelessWidget {
                 text: 'Lat:',
                 children: [
                   TextSpan(
-                    text: ' ${position.latitude}',
+                    text: ' ${position.latitude.roundToDouble()}',
                     style: subtitleStyle,
                   )
                 ],
@@ -43,7 +44,7 @@ class LocationTileWidget extends StatelessWidget {
                 text: 'Long:',
                 children: [
                   TextSpan(
-                    text: ' ${position.longitude}',
+                    text: ' ${position.longitude.roundToDouble()}',
                     style: subtitleStyle,
                   )
                 ],

@@ -4,8 +4,19 @@ import 'package:provider/provider.dart';
 
 import 'widget/widget.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    Provider.of<HomeViewModel>(context, listen: false).fetchLocationData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
